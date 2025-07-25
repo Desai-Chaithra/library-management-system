@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Management System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+    }
+
+    nav {
+      background-color: #333333;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    nav .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #569cd6;
+    }
+
+    nav .links a {
+      margin-left: 20px;
+      color: #9cdcfe;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav .links a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #2d2d2d;
+      color: #999999;
+      text-align: center;
+      padding: 12px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    main {
+      padding: 40px 20px 80px; /* padding-bottom for footer spacing */
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">📘 Library System</div>
+    <div class="links">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('signup') }}">Sign Up</a>
+    </div>
+  </nav>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    © 2025 Library Management System. All rights reserved.
+  </footer>
+
+</body>
+</html>
