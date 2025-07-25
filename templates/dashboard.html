@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+  }
+
+  h2, h3 {
+    text-align: center;
+    color: #569cd6;
+    margin-bottom: 20px;
+  }
+
+  .section {
+    margin: 30px auto;
+    width: 95%;
+    max-width: 1200px;
+  }
+
+  .book-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .book-card {
+    background-color: #252526;
+    border-left: 4px solid #007acc;
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+  }
+
+  .book-card strong {
+    color: #dcdcaa;
+    font-size: 16px;
+  }
+
+  .book-card em {
+    color: #9cdcfe;
+  }
+
+  .book-card small {
+    color: #c5c5c5;
+    display: block;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .btn-return {
+    background-color: #c586c0;
+    color: white;
+  }
+
+  .btn-borrow {
+    background-color: #007acc;
+    color: white;
+  }
+
+  .logout {
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .logout a {
+    color: #f44747;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid #f44747;
+    border-radius: 5px;
+  }
+
+  hr {
+    border: 1px solid #3c3c3c;
+    margin: 50px 0;
+  }
+</style>
+
+<h2>📚 User Dashboard</h2>
+
+{% set books_dict = {
+  1: ("To Kill a Mockingbird", "Harper Lee"),
+  2: ("1984", "George Orwell"),
+  3: ("Pride and Prejudice", "Jane Austen"),
+  4: ("The Great Gatsby", "F. Scott Fitzgerald"),
+  5: ("The Catcher in the Rye", "J.D. Salinger"),
+  6: ("The Hobbit", "J.R.R. Tolkien"),
+  7: ("Harry Potter and the Sorcerer's Stone", "J.K. Rowling"),
+  8: ("Fahrenheit 451", "Ray Bradbury"),
+  9: ("Moby Dick", "Herman Melville"),
+  10: ("The Lord of the Rings", "J.R.R. Tolkien"),
+  11: ("Jane Eyre", "Charlotte Brontë"),
+  12: ("Animal Farm", "George Orwell"),
+  13: ("Brave New World", "Aldous Huxley"),
+  14: ("The Chronicles of Narnia", "C.S. Lewis"),
+  15: ("Crime and Punishment", "Fyodor Dostoevsky"),
+  16: ("The Kite Runner", "Khaled Hosseini"),
+  17: ("The Alchemist", "Paulo Coelho"),
+  18: ("The Da Vinci Code", "Dan Brown"),
+  19: ("A Tale of Two Cities", "Charles Dickens"),
+  20: ("Wuthering Heights", "Emily Brontë"),
+  21: ("Les Misérables", "Victor Hugo"),
+  22: ("Gone with the Wind", "Margaret Mitchell"),
+  23: ("The Shining", "Stephen King"),
+  24: ("Life of Pi", "Yann Martel"),
+  25: ("The Girl on the Train", "Paula Hawkins"),
+  26: ("The Book Thief", "Markus Zusak"),
+  27: ("The Hunger Games", "Suzanne Collins"),
+  28: ("Twilight", "Stephenie Meyer"),
+  29: ("Percy Jackson & the Olympians", "Rick Riordan"),
+  30: ("The Fault in Our Stars", "John Green")
+} %}
+
+<div class="section">
+  <h3>📖 Your Borrowed Books</h3>
+  {% if borrowed and borrowed|length > 0 %}
+    <div class="book-grid">
+      {% for item in borrowed %}
+        {% set book_title, book_author = books_dict.get(item['book_id'], ('Unknown Title', 'Unknown Author')) %}
+        <div class="book-card">
+          <strong>{{ book_title }}</strong><br>
+          <em>by {{ book_author }}</em><br><br>
+          <small>Borrowed on: {{ item['borrow_date'] }}</small>
+          <small>Due by: {{ item['due_date'] }}</small><br><br>
+          {% if item['id'] is defined %}
+            <a href="{{ url_for('return_book', borrow_id=item['id']) }}">
+              <button class="btn btn-return">Return</button>
+            </a>
+          {% else %}
+            <span style="color: grey;">Return option unavailable</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align:center;">You have not borrowed any books yet.</p>
+  {% endif %}
+</div>
+
+<hr>
+
+<div class="section">
+  <h3>📚 Available Books</h3>
+  <div class="book-grid">
+    {% for id, title_author in books_dict.items() %}
+    <div class="book-card">
+      <strong>{{ title_author[0] }}</strong><br>
+      <em>by {{ title_author[1] }}</em><br><br>
+      <button onclick="checkAndBorrow({{ id }})" class="btn btn-borrow">Borrow</button>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="logout">
+  <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+<script>
+function checkAndBorrow(bookId) {
+  fetch('/borrow_check')
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(data => {
+      if (data.allowed) {
+        window.location.href = `/borrow/${bookId}`;
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      alert("Something went wrong. Please try again.");
+      console.error(error);
+    });
+}
+</script>
+
+{% endblock %}

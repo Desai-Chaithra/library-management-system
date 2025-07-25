@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    background-color: #333;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+  }
+
+  .navbar h1 {
+    color: #9cdcfe;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .navbar a {
+    color: #d4d4d4;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+  }
+
+  .navbar a:hover {
+    color: #569cd6;
+  }
+
+  .hero {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .hero h2 {
+    font-size: 32px;
+    color: #569cd6;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: #cccccc;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin: 50px auto;
+    padding: 0 30px;
+    max-width: 1200px;
+  }
+
+  .card {
+    background-color: #252526;
+    border: 1px solid #3c3c3c;
+    border-left: 5px solid #007acc;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #dcdcaa;
+  }
+
+  .card p {
+    font-size: 15px;
+    color: #cccccc;
+  }
+
+  .card a {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    background-color: #007acc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .card a:hover {
+    background-color: #005f99;
+  }
+
+  .emoji {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background-color: #1e1e1e;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #444;
+    margin-top: 40px;
+    color: #6a9955;
+    font-size: 14px;
+  }
+</style>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h1>📘 LMS Portal</h1>
+  <div>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('signup') }}">Sign Up</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="hero">
+  <h2>📚 Welcome to the Library Management System</h2>
+  <p>Easily manage, borrow, and return books — all in one place.</p>
+</div>
+
+<div class="grid-container">
+  <div class="card">
+    <div class="emoji">👤</div>
+    <h3>User Login</h3>
+    <p>Access your personal dashboard and manage your borrowed books.</p>
+    <a href="{{ url_for('login') }}">Login</a>
+  </div>
+
+  <div class="card">
+    <div class="emoji">📝</div>
+    <h3>Create Account</h3>
+    <p>Sign up to start borrowing books from our collection.</p>
+    <a href="{{ url_for('signup') }}">Sign Up</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Library Management System &copy; 2025
+</div>
+
+{% endblock %}

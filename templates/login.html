@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar */
+  .navbar {
+    background-color: #333;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+  }
+
+  .navbar h1 {
+    color: #9cdcfe;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .navbar a {
+    color: #d4d4d4;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+  }
+
+  .navbar a:hover {
+    color: #569cd6;
+  }
+
+  /* Login Box */
+  .login-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #252526;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00000099;
+    border-left: 4px solid #007acc;
+  }
+
+  .login-container h2 {
+    text-align: center;
+    color: #569cd6;
+    margin-bottom: 30px;
+  }
+
+  .login-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #dcdcaa;
+  }
+
+  .login-container input {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border: 1px solid #3c3c3c;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  .login-container button {
+    background-color: #007acc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+  }
+
+  .login-container p {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .login-container a {
+    color: #9cdcfe;
+    text-decoration: none;
+  }
+
+  .login-container a:hover {
+    text-decoration: underline;
+  }
+
+  /* Footer */
+  .footer {
+    background-color: #1e1e1e;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #444;
+    color: #6a9955;
+    font-size: 14px;
+    margin-top: 50px;
+  }
+</style>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h1>📘 LMS Portal</h1>
+  <div>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('signup') }}">Sign Up</a>
+    <a href="{{ url_for('index') }}">Home</a>
+  </div>
+</div>
+
+<!-- LOGIN FORM -->
+<div class="login-container">
+  <h2>🔐 Login</h2>
+  <form method="POST">
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+
+    <p>
+      Don't have an account?
+      <a href="{{ url_for('signup') }}">Sign up here</a>
+    </p>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Library Management System &copy; 2025
+</div>
+
+{% endblock %}
